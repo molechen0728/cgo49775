@@ -10,6 +10,10 @@ void free_data(SomeData* data) {
 	data->len = 0;
 }
 
+void free_float_arrary(float * arr)
+{
+	free(arr);
+}
 */
 import "C"
 import "fmt"
@@ -47,11 +51,21 @@ func _49775() {
 		msvc free X
 	*/
 
-	var sd C.SomeData
-	sd.data = C.CString("i am telling a truth")
+	// var sd C.SomeData
+	// sd.data = C.CString("i am telling a truth")
 
 	// defer C.delete_data(&sd) // oops
-	defer C.free_data(&sd) // OK
+	// defer C.free_data(&sd) // OK
 
-	var _ = sd
+	/*
+		case 3: msvc malloc a non-struct data
+		gcc free OK
+		msvc free X
+	*/
+
+	var arr = C.new_float_arrary()
+	// C.delete_float_arrary(arr)
+	C.free_float_arrary(arr)
+
+	var _ = arr
 }
